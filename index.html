@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Uraj — Developer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:     #ffffff;
+      --off-white: #f7f6f3;
+      --silk:      #f0ede8;
+      --pearl:     #e8e4dc;
+      --ink:       #111010;
+      --charcoal:  #2a2825;
+      --ash:       #6b6762;
+      --gold:      #b8a87a;
+      --gold-light:#d4c49a;
+      --accent:    #1a1a1a;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--pearl);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex; gap: 2.4rem; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      display: flex; gap: 0.8rem;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center;
+      padding: 0.6rem 1.5rem;
+      border-radius: 2px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .btn-outline {
+      border: 1.5px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+    }
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--white);
+    }
+    .btn-solid {
+      border: 1.5px solid var(--gold);
+      background: var(--gold);
+      color: var(--white);
+    }
+    .btn-solid:hover {
+      background: #9e8e60;
+      border-color: #9e8e60;
+    }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 100px 5% 60px;
+      background: linear-gradient(135deg, var(--white) 0%, var(--silk) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #home::before {
+      content: '';
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 540px; height: 540px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--pearl) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 1.4rem;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--ash);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* floating badge */
+    .hero-visual {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-circle {
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pearl), var(--silk));
+      border: 1px solid var(--gold-light);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .hero-initials {
+      font-family: var(--font-display);
+      font-size: 7rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+    }
+    .hero-badge {
+      position: absolute; bottom: 20px; right: -20px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 0.7rem 1.1rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .hero-badge span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 5%; }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+      line-height: 1.15;
+    }
+    .divider {
+      width: 48px; height: 2px;
+      background: var(--gold);
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--off-white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-text p {
+      color: var(--charcoal);
+      margin-bottom: 1.1rem;
+      line-height: 1.9;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--pearl);
+      border-radius: 4px;
+      padding: 1.6rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-top: 0.4rem;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--white); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+      margin-top: 0;
+    }
+    .service-card {
+      border: 1px solid var(--pearl);
+      border-radius: 4px;
+      padding: 2.4rem 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    .service-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.07); transform: translateY(-3px); }
+    .service-card:hover::before { transform: scaleY(1); }
+    .service-icon {
+      width: 48px; height: 48px;
+      background: var(--silk);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+    .service-card p { font-size: 0.88rem; color: var(--ash); line-height: 1.75; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--off-white); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+    }
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--pearl);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .project-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.09); transform: translateY(-4px); }
+    .project-thumb {
+      height: 170px;
+      background: linear-gradient(135deg, var(--pearl) 0%, var(--silk) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .project-body { padding: 1.6rem; }
+    .project-tags {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .tag {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold);
+      background: #f7f1e3;
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+    }
+    .project-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 0.5rem;
+    }
+    .project-body p { font-size: 0.85rem; color: var(--ash); line-height: 1.7; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--white); }
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .skill-item { margin-bottom: 1.6rem; }
+    .skill-header {
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--charcoal);
+      margin-bottom: 0.5rem;
+    }
+    .skill-bar {
+      height: 3px;
+      background: var(--pearl);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      animation: fillBar 1.2s ease forwards;
+      transform-origin: left;
+    }
+    @keyframes fillBar { from { width: 0; } }
+
+    .skills-extra {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .skill-chip {
+      background: var(--off-white);
+      border: 1px solid var(--pearl);
+      border-radius: 4px;
+      padding: 1.2rem 1.4rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .skill-chip .icon { font-size: 1.4rem; }
+    .skill-chip .name {
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--charcoal);
+    }
+    .skill-chip .level {
+      font-size: 0.7rem; color: var(--ash);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── RATING ── */
+    .rating-section {
+      background: linear-gradient(135deg, var(--ink) 0%, #2a2825 100%);
+      padding: 80px 5%;
+      text-align: center;
+    }
+    .rating-section .section-label { color: var(--gold-light); }
+    .rating-section .section-title { color: var(--white); }
+    .rating-grid {
+      display: flex; justify-content: center; gap: 4rem; margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .rating-item { text-align: center; }
+    .stars { font-size: 1.4rem; color: var(--gold); letter-spacing: 0.1em; }
+    .rating-num {
+      font-family: var(--font-display);
+      font-size: 3rem; font-weight: 700;
+      color: var(--white); line-height: 1;
+      margin: 0.3rem 0;
+    }
+    .rating-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--off-white);
+      padding: 40px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--pearl);
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--ink);
+    }
+    .footer-logo span { color: var(--gold); }
+    footer p { font-size: 0.78rem; color: var(--ash); }
+    .footer-btns { display: flex; gap: 0.8rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      #home { grid-template-columns: 1fr; padding-top: 120px; text-align: center; }
+      .hero-visual { margin-top: 3rem; }
+      .hero-sub { margin: 0 auto 2.5rem; }
+      .hero-btns { justify-content: center; }
+      #about { grid-template-columns: 1fr; gap: 40px; }
+      .services-grid,
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-layout { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">U<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="mailto:uraj@email.com" class="btn btn-outline">Contact</a>
+    <a href="mailto:uraj@email.com?subject=Hire%20Me" class="btn btn-solid">Hire Me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Web Developer & Cloud Enthusiast</p>
+    <h1 class="hero-title">Hello, I'm<br><em>Uraj</em></h1>
+    <p class="hero-sub">An aspiring developer from the hills of Shimla, crafting clean digital experiences with modern web technologies and cloud solutions.</p>
+    <div class="hero-btns">
+      <a href="mailto:uraj@email.com" class="btn btn-solid">Contact Me</a>
+      <a href="mailto:uraj@email.com?subject=Hire%20Me" class="btn btn-outline">Hire Me</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-circle">
+      <span class="hero-initials">U</span>
+      <div class="hero-badge">
+        <span>✦</span>
+        Shimla, IN
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">Aspiring Developer from the Hills</h2>
+    <div class="divider"></div>
+    <p>I am <strong>Uraj</strong>, an aspiring developer from Shimla, nestled in the mountains of Himachal Pradesh. My passion lies in building clean, functional, and visually compelling digital products.</p>
+    <p>I believe great development is the perfect blend of logic and design — and I bring that mindset to every project I work on, from crafting responsive frontends to deploying cloud-based solutions.</p>
+    <p>Currently growing my skills and looking for opportunities to collaborate, contribute, and create meaningful work in the web development space.</p>
+    <br/>
+    <div class="hero-btns">
+      <a href="mailto:uraj@email.com" class="btn btn-outline">Contact Me</a>
+      <a href="mailto:uraj@email.com?subject=Hire%20Me" class="btn btn-solid">Hire Me</a>
+    </div>
+  </div>
+  <div class="about-stats">
+    <div class="stat-card">
+      <div class="stat-num">4+</div>
+      <div class="stat-label">Core Skills</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Curiosity</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Dedication</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">☁️</div>
+      <div class="stat-label">Cloud Ready</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">What I Offer</p>
+  <h2 class="section-title">Services</h2>
+  <div class="divider"></div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <h3>Frontend Development</h3>
+      <p>Building pixel-perfect, responsive web interfaces using HTML, CSS, and JavaScript with clean semantic markup and modern design patterns.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <h3>Interactive UI</h3>
+      <p>Crafting dynamic, interactive user experiences with vanilla JavaScript — animations, DOM manipulation, and smooth user flows.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">☁️</div>
+      <h3>Cloud Deployment</h3>
+      <p>Setting up and deploying web applications on cloud platforms, ensuring scalability, uptime, and efficient resource management.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>Responsive Design</h3>
+      <p>Designing and developing mobile-first websites that look beautiful and function flawlessly across all screen sizes and devices.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔧</div>
+      <h3>Website Maintenance</h3>
+      <p>Ongoing support, updates, and optimization to keep your website fast, secure, and up to date with the latest standards.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🖥️</div>
+      <h3>Landing Pages</h3>
+      <p>Creating high-converting, visually stunning landing pages tailored to your brand and designed to capture attention and drive action.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">My Work</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="divider"></div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb">P.01</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span>
+        </div>
+        <h3>Personal Portfolio</h3>
+        <p>A clean, responsive portfolio site showcasing my journey as a developer, built from scratch with pure HTML & CSS.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb">P.02</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">JavaScript</span><span class="tag">CSS</span>
+        </div>
+        <h3>Interactive UI Component</h3>
+        <p>A collection of reusable UI components built with vanilla JavaScript — modals, sliders, and dynamic forms.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb">P.03</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">Cloud</span><span class="tag">HTML</span>
+        </div>
+        <h3>Cloud Hosted Web App</h3>
+        <p>A lightweight web application deployed to the cloud with custom domain setup, CDN, and continuous availability.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">Expertise</p>
+  <h2 class="section-title">Skills</h2>
+  <div class="divider"></div>
+  <div class="skills-layout">
+    <div>
+      <div class="skill-item">
+        <div class="skill-header"><span>HTML</span><span>90%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>CSS</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>JavaScript</span><span>75%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>Cloud Usage</span><span>70%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+      </div>
+    </div>
+    <div class="skills-extra">
+      <div class="skill-chip">
+        <div class="icon">🌐</div>
+        <div><div class="name">HTML5</div><div class="level">Semantic & Accessible</div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="icon">🎨</div>
+        <div><div class="name">CSS3</div><div class="level">Flexbox, Grid, Animations</div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="icon">⚡</div>
+        <div><div class="name">JavaScript</div><div class="level">ES6+, DOM, APIs</div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="icon">☁️</div>
+        <div><div class="name">Cloud</div><div class="level">Deployment & Hosting</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RATING SECTION -->
+<div class="rating-section">
+  <p class="section-label">Work Rating</p>
+  <h2 class="section-title" style="color:var(--white);">Quality I Deliver</h2>
+  <div class="rating-grid">
+    <div class="rating-item">
+      <div class="stars">★★★★★</div>
+      <div class="rating-num">5.0</div>
+      <div class="rating-label">Code Quality</div>
+    </div>
+    <div class="rating-item">
+      <div class="stars">★★★★★</div>
+      <div class="rating-num">5.0</div>
+      <div class="rating-label">Dedication</div>
+    </div>
+    <div class="rating-item">
+      <div class="stars">★★★★☆</div>
+      <div class="rating-num">4.8</div>
+      <div class="rating-label">Design Sense</div>
+    </div>
+    <div class="rating-item">
+      <div class="stars">★★★★★</div>
+      <div class="rating-num">5.0</div>
+      <div class="rating-label">Communication</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Uraj<span>.</span></div>
+  <p>© 2026 Uraj — Aspiring Developer, Shimla, India</p>
+  <div class="footer-btns">
+    <a href="mailto:uraj@email.com" class="btn btn-outline" style="padding:0.45rem 1.1rem; font-size:0.7rem;">Contact</a>
+    <a href="mailto:uraj@email.com?subject=Hire%20Me" class="btn btn-solid" style="padding:0.45rem 1.1rem; font-size:0.7rem;">Hire Me</a>
+  </div>
+</footer>
+
+</body>
+</html>

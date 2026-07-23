@@ -1,0 +1,25 @@
+ul li{
+    width: 14rem;
+    height: 1rem;
+    border: 1px solid #333;
+    list-style: none;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+body{
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+.main{
+    border: 1px solid #333;
+    width: 283px;
+    height: 400px;
+}
+.search{
+    
+}

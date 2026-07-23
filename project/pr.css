@@ -1,0 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: url(../img.jpeg) no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+}
+/*----model 1----*/
+#open-btn{
+    position: absolute;
+    top: 70%;
+    left: 10%;
+    font-size: 1.25rem;
+    background: transparent;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid white;
+    box-shadow: 0 0 3px black;
+    transition: .5s;
+    letter-spacing: 1px;
+    
+}
+#open-btn:hover{
+    background: white;
+    color: black;
+}
+/*----model 2----*/
+#model{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display:flex;
+    letter-spacing: 1px;
+    background: white;
+    justify-content: space-between;
+    padding: 40px 30px;
+    font-size: 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 0 3px black;
+    align-items: center;
+    animation-name: animatemodel;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+}
+/*----button----*/
+#close{
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: 600;
+}
+/*button color change*/
+#close{
+    color: red;
+
+}
+/*----model container----*/
+#model-container{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,.5);
+}
+ 
+/*----animation----*/
+@keyframes animatemodel{
+    from{
+        top: -300px;
+        opacity: 0;
+    }
+    to{
+        top: 50%;
+        opacity: 1;
+    }
+}
+
+
+
+
