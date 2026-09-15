@@ -15,7 +15,7 @@ import searchblue from "../assets/searchblue.svg";
 
 const Sidebar = ({ started, setStarted, input, setInput }) => {
   return (
-    <div className=" flex flex-col h-[100vh] px-2  justify-between cursor-default select-none w-[20%] border-r border-[#333]/60  ">
+    <div className=" flex h-screen flex-col  px-2  justify-between cursor-default select-none w-[20%] border-r border-[#E2E8F0]/100  ">
       {/*top sidebar  */}
 
       <div className="flex items-center justify-between">
@@ -41,7 +41,7 @@ const Sidebar = ({ started, setStarted, input, setInput }) => {
       </div>
 
       {/*sidebat content */}
-      <div className="text-[13px] mb-auto mt-2 tracking-wide  flex flex-col capitalize ">
+      <div className="text-[13px] mb-auto mt-2 tracking-wide  flex flex-col capitalize  ">
         <button
           onClick={() => {
             setStarted(false);
@@ -108,7 +108,7 @@ const Sidebar = ({ started, setStarted, input, setInput }) => {
       </div>
 
       {/*bottom sidebar */}
-      <div className="flex items-center justify-around border-t gap-3 p-3 border-[#333]/60">
+      <div className="flex items-center justify-around border-t gap-3 p-3 border-[#E2E8F0]/100">
         <img src={download} alt="y" className="h-9 w-9 rounded-full" />
         <div>
           <p className="capitalize items-center">yuvraj</p>

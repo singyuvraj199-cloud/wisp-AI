@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <>
-    <div className='flex gap-5'>
+    <div className='flex gap-5 h-screen'>
     <Sidebar setStarted={setStarted}
     setInput={setInput} input={input}
     />

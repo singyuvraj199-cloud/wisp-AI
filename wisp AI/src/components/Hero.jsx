@@ -5,6 +5,7 @@ import more from "../assets/more.png";
 import temporary from "../assets/temporary.png";
 import plus from "../assets/plus.svg";
 import voice from "../assets/voice.png";
+import Chat from './Chat';
 
 const Hero = ({started,setStarted, input, setInput}) => {
 
@@ -20,7 +21,7 @@ const Hero = ({started,setStarted, input, setInput}) => {
     <>
       {started ? (
         // ---------- CHAT LAYOUT (after first message) ----------
-        <div className="w-full flex flex-col justify-between items-center">
+        <div className="w-full flex-1 min-h-0 flex flex-col justify-between items-center">
           <div className="flex w-full justify-end items-start py-1 cursor-default px-4 ml-auto">
             <div className="flex items-center gap-3">
               <span className=" flex gap-1 items-center px-2 py-1 hover:bg-blue-100 rounded">
@@ -60,9 +61,12 @@ const Hero = ({started,setStarted, input, setInput}) => {
             </div>
           </div>
 
+          {/* CHAT LAYOUT */}
+          <Chat/>
+
           <div className="relative mb-8">
             <input
-              className="w-xl h-12 pl-10 py-2 bg-white border shadow-sm border-[#B8C2D1] select-none outline-none rounded-3xl focus:border-blue-600"
+              className="w-2xl h-12 pl-10 py-2 bg-white border shadow-sm border-[#B8C2D1] select-none outline-none rounded-3xl focus:border-blue-600"
               type="text"
               placeholder="ask anything"
               value={input}
@@ -115,7 +119,7 @@ const Hero = ({started,setStarted, input, setInput}) => {
 
         // ---------- WELCOME LAYOUT (before first message) ----------
 
-        <div className="w-full h-screen relative">
+        <div className="w-full flex-1 relative">
           <div className="flex w-full justify-end gap-4 items-center py-1 cursor-default px-4 ml-auto">
             <div className="flex items-center gap-3">
               <span className="flex gap-1 items-center px-2 py-1 hover:bg-blue-100 rounded">
@@ -149,14 +153,14 @@ const Hero = ({started,setStarted, input, setInput}) => {
           </div>
 
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div className="flex flex-col items-center gap-8">
-              <p className="capitalize text-2xl whitespace-nowrap tracking-wide cursor-default">
+            <div className="flex flex-col items-center gap-6">
+              <p className="capitalize text-[22px] whitespace-nowrap tracking-wide cursor-default select-none text-blue-800">
                 "got something on your mind? iam curious to hear it..."
               </p>
 
               <div className="relative">
                 <input
-                  className="w-xl h-12 pl-10 py-2 bg-white border border-[#B8C2D1] select-none outline-none rounded-3xl focus:border-blue-600"
+                  className=" w-2xl h-12 pl-10 py-2 bg-white border border-[#B8C2D1] select-none outline-none rounded-3xl focus:border-blue-600"
                   type="text"
                   placeholder="ask anything"
                   value={input}
@@ -184,7 +188,7 @@ const Hero = ({started,setStarted, input, setInput}) => {
               </div>
             </div>
 
-            <div className="absolute right-9 mt-8.5 top-1/2 -translate-y-1/2 group flex items-center justify-center">
+            <div className="absolute right-2 mt-8.5 top-1/2 -translate-y-1/2 group flex items-center justify-center">
               <div className="relative group">
                 <button>
                   <img
