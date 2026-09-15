@@ -1,66 +1,47 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import Message from "./Message"
 
 
-const Chat = () => {
+const Chat = ({messages}) => {
+
+const chatref = useRef(null)
+useEffect(()=>{
+    chatref.current?.scrollTo({
+        top: chatref.current.scrollHeight,
+        behavior: "smooth"
+    })
+},[messages])
+
   return (
-    <div className=' p-1 overflow-y-auto'>
-        {/* USER MESSAGE */}
-         <div className='  flex flex-1 min-h-0  w-2xl flex-col  justify-end gap-10 '>
-      <div className=' self-end flex  flex-col gap-5'>
-        <p className='border border-transparent rounded-2xl bg-blue-50 px-4 py-2 shadow-sm '>
-            hello wisp this is me?
-        </p>
-        <p className='border border-transparent rounded-2xl bg-blue-50 px-4 py-2 shadow-sm '>
-            hello wisp this is me?
-        </p>
-        <p className='border border-transparent rounded-2xl bg-blue-50 px-4 py-2 shadow-sm '>
-            hello wisp this is me?
-        </p>
-        <p className='border border-transparent rounded-2xl bg-blue-50 px-4 py-2 shadow-sm '>
-            hello wisp this is me?
-        </p>
-        <p className='border border-transparent rounded-2xl bg-blue-50 px-4 py-2 shadow-sm '>
-            hello wisp this is me?
-        </p>
-        <p className='border border-transparent rounded-2xl bg-blue-50 px-4 py-2 shadow-sm '>
-            hello wisp this is me?
-        </p>
-        <p className='border border-transparent rounded-2xl bg-blue-50 px-4 py-2 shadow-sm '>
-            hello wisp this is me?
-        </p>
-        
-        
-      </div>
-      
-
-
-
-    {/*AI MESSAGE  */}
-    <div className=' self-start mt-4 flex flex-col  '>
-        <div className='flex flex-col gap-5'>
+    <div flex
+    ref={chatref}
+    className=' p-1 overflow-y-auto 
     
-        <p>
-            hi yuvraj how are you.
-        </p>
-        <p>
-            hi yuvraj how are you.
-        </p>
-        <p>
-            hi yuvraj how are you.
-        </p>
-        <p>
-            hi yuvraj how are you.
-        </p>
+    '>
+        {/* USER MESSAGE */}
+         <div className='  flex flex-1 min-h-0  w-2xl flex-col  justify-end gap-10 text-[15px] '>
+     
+   {/* messages */}
+   {messages.map((message)=>(
+    <Message
+    key={message.id}
+    role={message.role}
+    content={message.content}
+
+    
+    />
+   ))}
+        
     
        </div>
+       <div className='flex flex-1 self-center w-fit mx-auto'>
+       <p className='text-[12px] flex text-gray-600 font-semibold mb-7 tracking-wide '>
+        Wisp AI can make mistakes. Check important information.
         
-        <p>
-            hi yuvraj how are you.
-        </p>
+       </p>
+       </div>
     </div>
-    </div>
-</div>
-
+    
 
   )
 }

@@ -7,13 +7,23 @@ import plus from "../assets/plus.svg";
 import voice from "../assets/voice.png";
 import Chat from './Chat';
 
-const Hero = ({started,setStarted, input, setInput}) => {
+
+const Hero = ({started,setStarted, input, setInput , messages, setMessages} ) => {
 
  
 
   const handlekey = (e) => {
     if (e.key === "Enter" && input.trim() !== "") {
       setStarted(true);
+     const newMessage = {
+
+      id: Date.now(),
+      role: "user",
+      content: input,
+     };
+      setMessages((prev) => [...prev, newMessage]);
+      setInput("");
+
     }
   };
 
@@ -61,8 +71,21 @@ const Hero = ({started,setStarted, input, setInput}) => {
             </div>
           </div>
 
+
+
+
           {/* CHAT LAYOUT */}
-          <Chat/>
+          <Chat 
+          input={input}
+          setInput={setInput}
+          messages={messages}
+          setMessages={setMessages}
+          />
+
+
+
+
+
 
           <div className="relative mb-8">
             <input

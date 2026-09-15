@@ -41,18 +41,19 @@ const Sidebar = ({ started, setStarted, input, setInput }) => {
       </div>
 
       {/*sidebat content */}
-      <div className="text-[13px] mb-auto mt-2 tracking-wide  flex flex-col capitalize  ">
+      <div className="text-[13px] mb-auto mt-2 tracking-wide  flex flex-col capitalize   ">
+      
         <button
+        className="capitalize flex items-center gap-2 px-2 py-2  hover:bg-blue-100 rounded-xl"
           onClick={() => {
             setStarted(false);
             setInput("");
-          }}
-        >
-          <span className="flex gap-2 px-2 py-2 items-center hover:bg-blue-100 rounded-xl ">
+          }}  >
             <img src={newChat} alt="" className="image" />
             <p>new chat</p>
-          </span>
         </button>
+      
+         
         <span className="flex gap-2 px-2  py-2 items-center  hover:bg-blue-100 rounded-xl  ">
           <img src={image} alt="" className="image" />
           <p>images</p>
