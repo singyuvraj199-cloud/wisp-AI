@@ -1,7 +1,6 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Homemade+Apple&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Homemade+Apple&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 @theme {
   --font-archivo: 'Archivo', sans-serif;
@@ -9,8 +8,12 @@
 }
 
 .image {
-  height: 15px;
-  width: 15px;
+  height: 18px;
+  width: 18px;
+}
+.blueimg{
+   height: 19px;
+  width: 19px;
 }
 
 body {
@@ -33,6 +36,17 @@ body {
 .animate-appear {
   animation: appear 0.3s ease-out both;
 }
+
 ::-webkit-scrollbar{
-  display: none;
+   width: 10px;
 }
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 10px;
+}
+

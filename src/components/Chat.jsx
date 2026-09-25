@@ -1,49 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react'
-import Message from "./Message"
+import React, { useState } from "react";
 
-
-const Chat = ({messages}) => {
-
-const chatref = useRef(null)
-useEffect(()=>{
-    chatref.current?.scrollTo({
-        top: chatref.current.scrollHeight,
-        behavior: "smooth"
-    })
-},[messages])
-
+const Chat = () => {
   return (
-    <div flex
-    ref={chatref}
-    className=' p-1 overflow-y-auto 
-    
-    '>
-        {/* USER MESSAGE */}
-         <div className='  flex flex-1 min-h-0  w-2xl flex-col  justify-end gap-10 text-[15px] '>
-     
-   {/* messages */}
-   {messages.map((message)=>(
-    <Message
-    key={message.id}
-    role={message.role}
-    content={message.content}
+    <div className="chat-container  w-2xl flex flex-col h-screen justify-between overflow-y-auto scrollbar-none ">
+      <div className="chat-messages  flex flex-col flex-1 gap-10  ">
+        <div className="user-message  self-end py-2 px-6 bg-blue-100 border border-transparent rounded-3xl ">
+          {/* user */}
+          hey wiap how are you?
+        </div>
+      </div>
 
-    
-    />
-   ))}
-        
-    
-       </div>
-       <div className='flex flex-1 self-center w-fit mx-auto'>
-       <p className='text-[12px] flex text-gray-600 font-semibold mb-7 tracking-wide '>
-        Wisp AI can make mistakes. Check important information.
-        
-       </p>
-       </div>
+      <div className="wisp-warning mt-auto self-center mb-4 text-gray-500 text-[12px] tracking-wide font-bold select-none cursor-default ">
+        <p>Wisp can also make mistake. check important info...</p>
+      </div>
     </div>
-    
+  );
+};
 
-  )
-}
-
-export default Chat
+export default Chat;

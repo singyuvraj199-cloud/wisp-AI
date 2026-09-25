@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import upgrade from "../assets/upgrade.png";
 import share from "../assets/share.png";
 import more from "../assets/more.png";
@@ -8,7 +8,7 @@ import voice from "../assets/voice.png";
 import Chat from './Chat';
 
 
-const Hero = ({started,setStarted, input, setInput , messages, setMessages} ) => {
+const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) => {
 
  
 
@@ -21,7 +21,7 @@ const Hero = ({started,setStarted, input, setInput , messages, setMessages} ) =>
       role: "user",
       content: input,
      };
-      setMessages((prev) => [...prev, newMessage]);
+      sendMessage(newMessage);
       setInput("");
 
     }
@@ -31,7 +31,7 @@ const Hero = ({started,setStarted, input, setInput , messages, setMessages} ) =>
     <>
       {started ? (
         // ---------- CHAT LAYOUT (after first message) ----------
-        <div className="w-full flex-1 min-h-0 flex flex-col justify-between items-center">
+        <div className="w-full flex-1 min-h-0 flex flex-col items-center">
           <div className="flex w-full justify-end items-start py-1 cursor-default px-4 ml-auto">
             <div className="flex items-center gap-3">
               <span className=" flex gap-1 items-center px-2 py-1 hover:bg-blue-100 rounded">
@@ -79,7 +79,7 @@ const Hero = ({started,setStarted, input, setInput , messages, setMessages} ) =>
           input={input}
           setInput={setInput}
           messages={messages}
-          setMessages={setMessages}
+          sendMessage={sendMessage}
           />
 
 
@@ -87,7 +87,7 @@ const Hero = ({started,setStarted, input, setInput , messages, setMessages} ) =>
 
 
 
-          <div className="relative mb-8">
+          <div className="relative mb-8 mt-auto">
             <input
               className="w-2xl h-12 pl-10 py-2 bg-white border shadow-sm border-[#B8C2D1] select-none outline-none rounded-3xl focus:border-blue-600"
               type="text"
