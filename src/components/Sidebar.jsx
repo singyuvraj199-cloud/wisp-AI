@@ -22,6 +22,11 @@ const Sidebar = ({
   setDisplayProject,
   activeMenu,
   setActiveMenu,
+  rename,
+  setRename,
+  renamingId,
+  setRenamingId,
+
 }) => {
   const [sidebar, setSideBar] = useState(true);
   return (
@@ -49,6 +54,11 @@ const Sidebar = ({
           setDisplayProject={setDisplayProject}
           activeMenu={activeMenu}
           setActiveMenu={setActiveMenu}
+          rename={rename}
+          setRename={setRename}
+          renamingId={renamingId}
+          setRenamingId={setRenamingId}
+    
         />
       ) : (
         <Closesidebar

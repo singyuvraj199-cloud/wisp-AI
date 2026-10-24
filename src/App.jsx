@@ -9,15 +9,24 @@ const App = () => {
   const [started, setStarted] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  {
+    /*REMANE FUNCTION AND USESTATE */
+  }
+  const [renamingId, setRenamingId] = useState(null);
 
+  const [rename, setRename] = useState("");
 
-  {/*PROJECT MENU (DELETE AND RENAME BUTTON) */}
-  const[activeMenu, setActiveMenu] = useState(null);
+  {
+    /*PROJECT MENU (DELETE AND RENAME BUTTON) */
+  }
+  const [activeMenu, setActiveMenu] = useState(null);
 
-  { /*WISP-PROJECT SECTION */}
+  {
+    /*WISP-PROJECT SECTION */
+  }
   const [displayProject, setDisplayProject] = useState(false);
   const [showProject, setShowProject] = useState(false);
-  
+
   const [projectName, setProjectName] = useState(() => {
     try {
       const saved = JSON.parse(localStorage.getItem("wisp-project")) || [];
@@ -158,6 +167,10 @@ const App = () => {
           setDisplayProject={setDisplayProject}
           activeMenu={activeMenu}
           setActiveMenu={setActiveMenu}
+          rename={rename}
+          setRename={setRename}
+          renamingId={renamingId}
+          setRenamingId={setRenamingId}
         />
 
         <Hero
@@ -171,8 +184,6 @@ const App = () => {
           setLoading={setLoading}
         />
         <Project
-          
-         
           projectName={projectName}
           setProjectName={setProjectName}
           createProject={createProject}
@@ -180,7 +191,7 @@ const App = () => {
           project={project}
           setShowProject={setShowProject}
           showProject={showProject}
-           displayProject={displayProject}
+          displayProject={displayProject}
           setDisplayProject={setDisplayProject}
         />
       </div>

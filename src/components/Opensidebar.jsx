@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import search from "../assets/search.png";
 import closeOpen from "../assets/sidebar-close-open.png";
-import download from "../assets/download.jpg"; 
+import download from "../assets/download.jpg";
 import image from "../assets/image.png";
 import library from "../assets/library.png";
 import schedule from "../assets/schedule.png";
@@ -37,8 +37,16 @@ const Opensidebar = ({
   setDisplayProject,
   activeMenu,
   setActiveMenu,
+  rename,
+  setRename,
+  renamingId,
+  setRenamingId,
 }) => {
   const [showRecents, setShowRecents] = useState(true);
+
+  {
+    /*CLOSE PROJECT MENU */
+  }
   useEffect(() => {
     const closeMenu = () => setActiveMenu(null);
     document.addEventListener("click", closeMenu);
@@ -47,10 +55,39 @@ const Opensidebar = ({
     };
   }, [setActiveMenu]);
 
+  {
+    /*CLOSE RENAMING */
+  }
+  useEffect(() => {
+    const closeRename = () => setRenamingId(null);
+    setRename("");
+
+    document.addEventListener("click", closeRename);
+
+    return () => {
+      removeEventListener("click", closeRename);
+    };
+  }, [setRenamingId, setRename]);
+
   const deleteProject = (id) => {
     setProjectName((prev) => prev.filter((project) => project.id !== id));
   };
 
+  const reNameProject = (id, newName) => {
+    if (!newName.trim()) return;
+
+    setProjectName((prev) =>
+      prev.map((project) =>
+        project.id === id ? { ...project, name: newName } : project,
+      ),
+    );
+    setRenamingId(null);
+    setRename("");
+  };
+  const handleName = (project) => {
+    setRenamingId(project.id);
+    setRename(project.name);
+  };
   return (
     <div className="flex h-screen w-[17%] flex-col border-r border-[#E2E8F0] bg-[#F8FAFC] px-2 select-none ">
       {/* ================= TOP ================= */}
@@ -178,7 +215,28 @@ const Opensidebar = ({
                   key={project.id}
                 >
                   <img src={proimg} alt="" className="w-4 h-4 mr-1" />{" "}
-                  {project.name}
+                  {renamingId === project.id ? (
+                    <input
+                      type="text"
+                      autoFocus
+                      value={rename}
+                      onChange={(e) => setRename(e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          reNameProject(project.id, rename);
+                        }
+
+                        if (e.key === "Escape") {
+                          setRenamingId(null);
+                          setRename("");
+                        }
+                      }}
+                      className="w-full min-w-0 bg-white border border-blue-400 rounded px-1 outline-none"
+                    />
+                  ) : (
+                    <span className="truncate">{project.name}</span>
+                  )}
                   <span className="ml-auto">
                     <button
                       onClick={(e) => {
@@ -200,7 +258,16 @@ const Opensidebar = ({
                       onClick={(e) => e.stopPropagation()}
                       className="absolute right-0 top-full z-50 mt-1 w-36 rounded-xl border border-gray-200 bg-white p-1.5 shadow-lg"
                     >
-                      <button className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-100">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleName(project);
+                          setRenamingId(project.id);
+                          setRename(project.name);
+                          setActiveMenu(null);
+                        }}
+                        className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-100"
+                      >
                         Rename
                       </button>
 
