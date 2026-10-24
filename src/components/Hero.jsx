@@ -1,28 +1,23 @@
-
+import React, { useState } from "react";
 import upgrade from "../assets/upgrade.png";
 import share from "../assets/share.png";
 import more from "../assets/more.png";
 import temporary from "../assets/temporary.png";
 import plus from "../assets/plus.svg";
-import voice from "../assets/voice.png";
-import Chat from './Chat';
+import send from "../assets/send.png";
+import Chat from "../Chat";
 
 
-const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) => {
+
+const Hero = ({started,setStarted, input, setInput, sendMessage, messages, loading , setLoading}) => {
 
  
 
   const handlekey = (e) => {
     if (e.key === "Enter" && input.trim() !== "") {
       setStarted(true);
-     const newMessage = {
-
-      id: Date.now(),
-      role: "user",
-      content: input,
-     };
-      sendMessage(newMessage);
-      setInput("");
+      sendMessage()
+    
 
     }
   };
@@ -31,7 +26,7 @@ const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) =>
     <>
       {started ? (
         // ---------- CHAT LAYOUT (after first message) ----------
-        <div className="w-full flex-1 min-h-0 flex flex-col items-center">
+        <div className="w-full flex-1 min-h-0 flex flex-col justify-between items-center">
           <div className="flex w-full justify-end items-start py-1 cursor-default px-4 ml-auto">
             <div className="flex items-center gap-3">
               <span className=" flex gap-1 items-center px-2 py-1 hover:bg-blue-100 rounded">
@@ -62,7 +57,7 @@ const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) =>
                 <p
                   className="capitalize text-xs absolute top-full mt-2 right-0
                   opacity-0 invisible whitespace-nowrap tracking-wide px-4 py-2
-                  group-hover:opacity-100 duration-200 delay-300 transition-opacity
+                  group-hover:opacity-100 duration-200  transition-opacity
                   bg-blue-700 text-white rounded-2xl group-hover:visible font-semibold"
                 >
                   more
@@ -75,19 +70,16 @@ const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) =>
 
 
           {/* CHAT LAYOUT */}
-          <Chat 
-          input={input}
-          setInput={setInput}
-          messages={messages}
-          sendMessage={sendMessage}
-          />
+           <Chat
+           messages={messages}
+           loading={loading}
+           setLoading={setLoading}
+           />
 
 
 
 
-
-
-          <div className="relative mb-8 mt-auto">
+          <div className="relative mb-8">
             <input
               className="w-2xl h-12 pl-10 py-2 bg-white border shadow-sm border-[#B8C2D1] select-none outline-none rounded-3xl focus:border-blue-600"
               type="text"
@@ -109,28 +101,23 @@ const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) =>
               </div>
               <p
                 className="absolute top-full border bg-blue-700 rounded-3xl tracking-wide text-white text-xs px-3 capitalize w-fit py-2
-                opacity-0 invisible group-hover:opacity-100 duration-200 delay-300 transition-opacity group-hover:visible text-nowrap font-semibold"
+                opacity-0 invisible group-hover:opacity-100 duration-200  transition-opacity group-hover:visible text-nowrap font-semibold"
               >
                 add files and more
               </p>
             </div>
 
             {/* voice button right */}
-            <div className="absolute right-2 bottom-5 top-1/2 -translate-y-1/2 group flex items-center justify-center">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 group flex items-center justify-center">
               <div className="relative group">
                 <button className="flex items-center">
                   <img
-                    src={voice}
-                    className="p-1 w-8 h-8 hover:backdrop-brightness-85 rounded-full select-none"
+                    src={send}
+                    className=" w-7 h-7  select-none"
                   />
                 </button>
               </div>
-              <p
-                className="absolute top-5 border bg-blue-700 rounded-3xl tracking-wide text-white text-xs px-4 capitalize w-fit py-2
-                opacity-0 invisible group-hover:opacity-100 duration-200 delay-300 transition-opacity group-hover:visible text-nowrap font-semibold"
-              >
-                start voice
-              </p>
+              
             </div>
           </div>
         </div>
@@ -166,7 +153,7 @@ const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) =>
                 className="capitalize text-xs absolute top-full  mt-2 right-0 
           opacity-0
             invisible whitespace-nowrap tracking-wide px-3 py-2
-          group-hover:opacity-100 duration-200 delay-300 transition-opacity
+          group-hover:opacity-100 duration-200  transition-opacity
            bg-blue-700 text-white rounded-2xl  group-hover:visible font-semibold
            "
               >
@@ -203,7 +190,7 @@ const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) =>
                   </div>
                   <p
                     className="absolute top-full border bg-blue-700 rounded-3xl tracking-wide text-white text-xs px-3 capitalize w-fit py-2
-                    opacity-0 invisible group-hover:opacity-100 duration-200 delay-300 transition-opacity group-hover:visible text-nowrap font-semibold"
+                    opacity-0 invisible group-hover:opacity-100 duration-200  transition-opacity group-hover:visible text-nowrap font-semibold"
                   >
                     add files and more
                   </p>
@@ -211,21 +198,16 @@ const Hero = ({started,setStarted, input, setInput , messages, sendMessage} ) =>
               </div>
             </div>
 
-            <div className="absolute right-2 mt-8.5 top-1/2 -translate-y-1/2 group flex items-center justify-center">
+            <div className="absolute right-3 mt-8 top-1/2 -translate-y-1/2 group flex items-center justify-center">
               <div className="relative group">
                 <button>
                   <img
-                    src={voice}
-                    className="p-1 w-8 h-8 hover:backdrop-brightness-85 rounded-full select-none"
+                    src={send}
+                    className=" w-7 h-7 select-none"
                   />
                 </button>
               </div>
-              <p
-                className="absolute top-full border bg-blue-700 rounded-3xl tracking-wide text-white text-xs px-3 capitalize w-fit py-2
-                    opacity-0 invisible group-hover:opacity-100 duration-200 delay-300 transition-opacity group-hover:visible text-nowrap font-semibold"
-              >
-                start voice
-              </p>
+              
             </div>
           </div>
         </div>

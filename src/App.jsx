@@ -1,121 +1,191 @@
-import React, { useEffect, useState } from 'react'
-import Sidebar from './components/Sidebar'
-import Hero from './components/Hero'
-import { getAIResponse } from './api/wisp';
+import React, { useActionState, useEffect } from "react";
+import Sidebar from "./components/Sidebar";
+import Hero from "./components/Hero";
+import { useState } from "react";
+import { getAIResponse } from "./api/wisp";
+import Project from "./components/Projects";
 
 const App = () => {
-  const [started, setStarted] = useState(false)
+  const [started, setStarted] = useState(false);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([])
+  const [loading, setLoading] = useState(false);
 
-// STORE RECENT CHAT 
-  const [chats, setChats] = useState(() => {
-  const savedChats = localStorage.getItem("wisp-chat");
 
-  return savedChats ? JSON.parse(savedChats) : [];
-});
+  {/*PROJECT MENU (DELETE AND RENAME BUTTON) */}
+  const[activeMenu, setActiveMenu] = useState(null);
 
+  { /*WISP-PROJECT SECTION */}
+  const [displayProject, setDisplayProject] = useState(false);
+  const [showProject, setShowProject] = useState(false);
   
-  const [currentChatId, setCurrentChatId] = useState(null)
+  const [projectName, setProjectName] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("wisp-project")) || [];
 
+      return Array.isArray(saved) ? saved : [];
+    } catch {
+      return [];
+    }
+  });
 
-  const openChat = (id) =>{
-      const chat = chats.find((chat) => chat.id === id)
-      if(!chat) return;
+  useEffect(() => {
+    localStorage.setItem("wisp-project", JSON.stringify(projectName));
+  }, [projectName]);
+  const [project, setProject] = useState("");
+  const createProject = () => {
+    if (!project.trim()) return;
 
-       setCurrentChatId(id);
-       setMessages(chat.messages);
-       setStarted(true);
-
-  }
-  
-
-
-// SAVE DATA IN LOCAL STORAGE
-useEffect(() => {
-  localStorage.setItem("wisp-chat", JSON.stringify(chats));
-}, [chats]);
-
-const createChat = () => {
-  const newChat = {
-    id: crypto.randomUUID(),
-    title: "New chat",
-    messages: [],
-  };
-
-  setChats((prev) => [...prev, newChat]);
-  setCurrentChatId(newChat.id);
-  setMessages([]);
-  setStarted(false)
-};
-
-
-  const sendMessage = async (userMessage) => {
-  const updated = [...messages, userMessage];
-  setMessages(updated);
-
-  try {
-    const reply = await getAIResponse(updated);
-
-    const newMessages = [
-      ...updated,
-      {
-        id: Date.now(),
-        role: "ai",
-        content: reply,
-      },
-    ];
-
-    setMessages(newMessages);
-
-    setChats((prevChats) =>
-      prevChats.map((chat) =>
-        chat.id === currentChatId
-          ? {
-              ...chat,
-              title:
-                chat.messages.length === 0
-                  ? userMessage.content
-                  : chat.title,
-              messages: newMessages,
-            }
-          : chat
-      )
-    );
-  } catch (error) {
-    console.error("AI response error:", error);
-
-    const errorMessage = {
-      id: Date.now(),
-      role: "ai",
-      content: "Wisp is temporarily unavailable. Please try again later.",
+    const newProject = {
+      id: crypto.randomUUID(),
+      name: project.trim(),
     };
 
-    setMessages([...updated, errorMessage]);
+    setProjectName((prev) => [...prev, newProject]);
+    setProject("");
+    setShowProject(false);
+    setDisplayProject(true);
+  };
+
+  {
+    /*RECENT CHAT SAVED SECTION */
   }
-};
+  const [recentChats, setRecentChats] = useState(() => {
+    const saved = localStorage.getItem("wisp-recents");
+    return saved ? JSON.parse(saved) : [];
+  });
 
+  const [currentChatId, setCurrentChatId] = useState(() => {
+    return localStorage.getItem("wisp-current-id");
+  });
+  useEffect(() => {
+    if (currentChatId) {
+      localStorage.setItem("wisp-current-id", currentChatId);
+    } else {
+      localStorage.removeItem("wisp-current-id");
+    }
+  }, [currentChatId]);
 
+  {
+    /*MESSAGE SECTION */
+  }
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("wisp-chat");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("wisp-chat", JSON.stringify(messages));
+  }, [messages]);
+
+  useEffect(() => {
+    localStorage.setItem("wisp-recents", JSON.stringify(recentChats));
+  }, [recentChats]);
+
+  const sendMessage = async () => {
+    console.log(
+      "started:",
+      started,
+      "currentChatId:",
+      currentChatId,
+      "isNewChat:",
+      !currentChatId || !started,
+    );
+
+    if (!input.trim()) return;
+    const userMessage = input;
+
+    const isNewChat = !currentChatId;
+
+    if (isNewChat) {
+      let title = userMessage;
+      if (userMessage.length > 30) {
+        title = userMessage.slice(0, 30) + "...";
+      }
+      const newId = crypto.randomUUID();
+      setRecentChats((prev) => [{ id: newId, title: title }, ...prev]);
+      setCurrentChatId(newId);
+    }
+
+    const newUserMessage = {
+      role: "user",
+      content: userMessage,
+      id: crypto.randomUUID(),
+    };
+
+    if (isNewChat) {
+      setMessages([newUserMessage]);
+    } else {
+      setMessages((prev) => [...prev, newUserMessage]);
+    }
+    setInput("");
+    setLoading(true);
+    try {
+      const data = await getAIResponse(userMessage);
+      if (data.error) {
+        console.log(data.error);
+        return;
+      }
+      setMessages((prev) => [
+        ...prev,
+        { role: "ai", content: data.reply, id: crypto.randomUUID() },
+      ]);
+    } catch (error) {
+      console.error("AI response error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
-    
-      <div className='flex gap-5 h-screen'>
-        <Sidebar setStarted={setStarted}
-           setInput={setInput} input={input}
-           chats={chats}
-           openChat={openChat}
-           createChat={createChat}
+      <div className="flex gap-5 h-screen w-full">
+        <Sidebar
+          setStarted={setStarted}
+          setInput={setInput}
+          input={input}
+          recentChats={recentChats}
+          setRecentChats={setRecentChats}
+          messages={messages}
+          setMessages={setMessages}
+          setCurrentChatId={setCurrentChatId}
+          projectName={projectName}
+          setProjectName={setProjectName}
+          project={project}
+          setProject={setProject}
+          showProject={showProject}
+          setShowProject={setShowProject}
+          displayProject={displayProject}
+          setDisplayProject={setDisplayProject}
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
         />
-        <Hero started={started} setStarted={setStarted}
-          setInput={setInput} input={input}
-          messages={messages} sendMessage={sendMessage}
+
+        <Hero
+          started={started}
+          setStarted={setStarted}
+          setInput={setInput}
+          input={input}
+          sendMessage={sendMessage}
+          messages={messages}
+          loading={loading}
+          setLoading={setLoading}
+        />
+        <Project
+          
+         
+          projectName={projectName}
+          setProjectName={setProjectName}
+          createProject={createProject}
+          setProject={setProject}
+          project={project}
+          setShowProject={setShowProject}
+          showProject={showProject}
+           displayProject={displayProject}
+          setDisplayProject={setDisplayProject}
         />
       </div>
     </>
+  );
+};
 
-    
-  )
-}
-
-export default App
+export default App;

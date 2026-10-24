@@ -2,18 +2,19 @@
 @import "tailwindcss";
 
 
+
 @theme {
   --font-archivo: 'Archivo', sans-serif;
   --font-handwriting: 'Homemade Apple', cursive;
 }
 
 .image {
-  height: 18px;
-  width: 18px;
+  height: 17px;
+  width: 17px;
 }
 .blueimg{
-   height: 19px;
-  width: 19px;
+  width: 18px;
+  height: 18px;
 }
 
 body {
@@ -36,17 +37,6 @@ body {
 .animate-appear {
   animation: appear 0.3s ease-out both;
 }
-
 ::-webkit-scrollbar{
-   width: 10px;
+  display: none;
 }
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #e5e7eb;
-  border-radius: 10px;
-}
-
